@@ -27,7 +27,7 @@ public class BookController {
     @Autowired
     BookRepository BookRepository;
 
-    @GetMapping("/Books")
+    @GetMapping("/books")
     public ResponseEntity<List<Book>> getListBooks(@RequestParam(required = false) String title) {
         try {
             List<Book> Books = new ArrayList<Book>();
@@ -47,7 +47,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/Books/{id}")
+    @GetMapping("/books/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable("id") long id) {
         Optional<Book> BookData = BookRepository.findById(id);
 
@@ -58,7 +58,7 @@ public class BookController {
         }
     }
 
-    @PostMapping("/Books")
+    @PostMapping("/books")
     public ResponseEntity<Book> createBook(@RequestBody Book Book) {
         try {
             Book _Book = BookRepository
@@ -71,7 +71,7 @@ public class BookController {
 
 
 
-    @DeleteMapping("/Books/{id}")
+    @DeleteMapping("/books/{id}")
     public ResponseEntity<HttpStatus> deleteBook(@PathVariable("id") long id) {
         try {
             BookRepository.deleteById(id);
@@ -81,7 +81,7 @@ public class BookController {
         }
     }
 
-    @DeleteMapping("/Books")
+    @DeleteMapping("/books")
     public ResponseEntity<HttpStatus> deleteAllBooks() {
         try {
             BookRepository.deleteAll();
@@ -92,17 +92,5 @@ public class BookController {
 
     }
 
-    @GetMapping("/Books/published")
-    public ResponseEntity<List<Book>> findByPublished() {
-        try {
-            List<Book> Books = BookRepository.findByPublished(true);
 
-            if (Books.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(Books, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 }
